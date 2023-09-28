@@ -1,11 +1,7 @@
 <script>
-    import { index } from "d3-array";
-
     export let yScale;
     export let width;
     let yTicks = yScale.ticks(4);
-
-    console.log(yTicks);
 </script>
 
 {#each yTicks as tick, index}
