@@ -1,65 +1,24 @@
 <script>
-  import Example from "$components/Example.svelte";
-  import data from "$data/data.js";
-  console.log(data);
+    import data from "$data/data.js";
+    import { scaleLinear } from "d3-scale";
+
+    console.log(data);
+
+    let width = 400;
+    let height = 400;
+    let xScale = scaleLinear().domain([0, 100]).range([0, width]);
+    let yScale = scaleLinear().domain([0, 60]).range([height, 0]);
 </script>
 
-<main>
-  <h1>Let's make a chart 😎</h1>
-  <h2>
-    Get started by deleting all of the contents in <pre>App.svelte</pre>
-    🗑
-  </h2>
-  <Example />
-  <footer>
-    For help, <a
-      href="https://twitter.com/CL_Rothschild"
-      target="_blank"
-      rel="noopener noreferrer">DM Connor on Twitter ✉️</a
-    >
-  </footer>
-</main>
-
-<style>
-  main {
-    text-align: center;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #f0f0f0;
-  }
-
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
-
-  pre {
-    padding: 1px 6px;
-    display: inline;
-    margin: 0;
-    background: #ffb7a0;
-    border-radius: 3px;
-  }
-
-  a {
-    color: #ff3e00;
-    text-decoration: inherit;
-  }
-
-  footer {
-    font-size: 1rem;
-    color: #333;
-  }
-</style>
+<svg {width} {height}>
+    {#each data as d}
+        <circle
+            cx={xScale(d.grade)}
+            cy={yScale(d.hours)}
+            r={10}
+            fill="purple"
+            stroke="black"
+            stroke-width="1"
+        />
+    {/each}
+</svg>
