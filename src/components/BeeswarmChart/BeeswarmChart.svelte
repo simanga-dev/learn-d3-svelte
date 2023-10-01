@@ -6,15 +6,17 @@
     import AxisX from "./AxisX.svelte";
     import AxisY from "./AxisY.svelte";
     import Legend from "./Legend.svelte";
+    import Tootip from "./Tooltip.svelte";
+    import { fade } from "svelte/transition";
 
     let width = 400,
-        height = 600;
+        height = 400;
 
     const margin = {
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 20,
+        top: 15,
+        right: 15,
+        bottom: 15,
+        left: 15,
     };
 
     // Generate the average for each continent, so that we can sort according to that
@@ -43,60 +45,137 @@
     $: innerWidth = width - margin.left - margin.right;
     let innerHeight = height - margin.top - margin.bottom;
 
-    $: xScale = scaleLinear()
-        // .domain(extent(data, (d) => d.happiness))
-        .domain([1, 9])
-        .range([0, innerWidth]);
+    // .domain(extent(data, (d) => d.happiness))
+    $: xScale = scaleLinear().domain([1, 9]).range([0, innerWidth]);
 
     let yScale = scaleBand()
         .domain(continents)
         .range([innerHeight, 0])
         .paddingOuter(0.5);
 
-    $: simulation = forceSimulation(data)
-        .force(
-            "x",
-            forceX()
-                .x((d) => xScale(d.happiness))
-                .strength(0.8)
-        )
-        .force(
-            "y",
-            forceY()
-                .y((d) => yScale(d.continent))
-                .strength(0.2)
-        )
-        .force(
-            "collide",
-            forceCollide().radius((d) => radiusScale(d.happiness))
-        );
+    let groupByContinet = false;
 
-    $: nodes = simulation.nodes();
+    const simulation = forceSimulation(data);
+    $: {
+        simulation
+            .force(
+                "x",
+                forceX()
+                    .x((d) => xScale(d.happiness))
+                    .strength(0.8)
+            )
+            .force(
+                "y",
+                forceY()
+                    .y(
+                        groupByContinet
+                            ? (d) => yScale(d.continent)
+                            : innerHeight / 2
+                    )
+                    .strength(0.2)
+            )
+            .force(
+                "collide",
+                forceCollide().radius((d) => radiusScale(d.happiness))
+            )
+            .alpha(0.3)
+            .alphaDecay(0.0005)
+            .restart();
+    }
+
+    let nodes = [];
+    simulation.on("tick", () => {
+        nodes = simulation.nodes();
+    });
+
+    let hovered;
+    let hoveredContinent;
+    $: console.log(hoveredContinent);
 </script>
 
 <h1>The happiness continent in the world</h1>
 
-<div class="chart-container" bind:clientWidth={width}>
-    <Legend {colorScale} />
-    <svg {width} {height}>
+<Legend {colorScale} bind:hoveredContinent />
+<div
+    class="chart-container"
+    on:click={() => {
+        groupByContinet = !groupByContinet;
+        hovered = null;
+    }}
+    on:keydown={() => {
+        groupByContinet = !groupByContinet;
+        hovered = null;
+    }}
+    bind:clientWidth={width}
+>
+    <svg
+        {width}
+        {height}
+        on:mouseleave={() => {
+            hovered = null;
+        }}
+    >
         <g transform="translate({margin.left}, {margin.top})">
             <AxisX {xScale} height={innerHeight} width={innerWidth} />
-            <AxisY {yScale} />
-            {#each nodes as node}
+            <AxisY {yScale} {groupByContinet} />
+            {#if hovered}
+                <line
+                    x1={hovered.x}
+                    x2={hovered.x}
+                    y1={height - margin.bottom}
+                    y2={hovered.y + margin.top + radiusScale(hovered.happiness)}
+                    stroke={colorScale(hovered.continent)}
+                    stroke-width="2"
+                />
+            {/if}
+
+            {#each nodes as node, index}
                 <circle
+                    in:fade={{ delay: 500 + index * 10 }}
+                    role="button"
                     cx={node.x}
                     cy={node.y}
                     r={radiusScale(node.happiness)}
                     fill={colorScale(node.continent)}
-                    stroke="gray"
+                    stroke={hovered || hoveredContinent
+                        ? hovered === node || hoveredContinent == node.continent
+                            ? "black"
+                            : "transparent"
+                        : "#00000090"}
+                    opacity={hovered || hoveredContinent
+                        ? hovered === node || hoveredContinent == node.continent
+                            ? 1
+                            : 0.3
+                        : 1}
+                    on:mouseover={() => {
+                        hovered = node;
+                    }}
+                    on:focus={() => {
+                        hovered = node;
+                    }}
+                    tabindex="0"
+                    on:click={(e) => {
+                        e.stopPropagation();
+                    }}
+                    on:keydown={(e) => {
+                        e.stopPropagation();
+                    }}
                 />
             {/each}
         </g>
     </svg>
+    {#if hovered}
+        <Tootip {colorScale} data={hovered} {width} />
+    {/if}
 </div>
 
 <style>
-    svg {
-        /* background: gray */
+    .chart-container {
+        position: relative;
+    }
+
+    circle {
+        transition: stroke 300ms ease, opacity 300ms ease;
+        cursor: pointer;
     }
 </style>

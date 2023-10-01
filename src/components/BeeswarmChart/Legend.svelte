@@ -1,11 +1,29 @@
 <script>
     export let colorScale;
+    export let hoveredContinent;
+    let continents = colorScale.domain();
 </script>
 
-<div class="legend">
-    {#each colorScale.domain() as domain}
-        <span style="background-color: {colorScale(domain)}" />
-        <p>{domain}</p>
+<div
+    class="legend"
+    on:mouseleave={() => {
+        hoveredContinent = null;
+    }}
+>
+    {#each continents as continent}
+        <p
+            on:mouseover={() => {
+                hoveredContinent = continent;
+            }}
+            on:focus={() => {
+                hoveredContinent = continent;
+            }}
+            class:unHoveredContinent={hoveredContinent &&
+                hoveredContinent !== continent}
+        >
+            <span style="background-color: {colorScale(continent)}" />
+            {continent}
+        </p>
     {/each}
 </div>
 
@@ -32,5 +50,10 @@
         display: flex;
         align-items: center;
         column-gap: 3px; /* Adds a slight gap between the span and the text */
+        cursor: pointer;
+        transition: opacity 300ms ease;
+    }
+    .unHoveredContinent {
+        opacity: 0.3;
     }
 </style>

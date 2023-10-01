@@ -11,7 +11,7 @@
     let tooltipWidth;
 
     const xNudge = 15;
-    const yNudge = 30;
+    const yNudge = 1000;
 
     $: xPosition =
         x + tooltipWidth > width ? x - tooltipWidth - xNudge : x + xNudge;
