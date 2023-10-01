@@ -1,15 +1,15 @@
 <script>
     import data from "$data/data.js";
     import { scaleLinear } from "d3-scale";
-    import AxisX from "$components/ui/AxisX.svelte";
-    import AxisY from "$components/ui/AxisY.svelte";
-    import Tooltip from "$components/ui/Tooltip.svelte";
+    import AxisX from "./AxisX.svelte";
+    import AxisY from "./AxisY.svelte";
+    import Tooltip from "./Tooltip.svelte";
 
     const margin = {
         top: 20,
         right: 20,
         bottom: 20,
-        left: 0,
+        left: 15,
     };
 
     let width = 400;
@@ -79,6 +79,6 @@
     h1 {
         font-size: 1.3rem;
         text-transform: capitalize;
-        margin-bottom: .8rem;
+        margin-bottom: 0.8rem;
     }
 </style>
