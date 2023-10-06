@@ -15,10 +15,14 @@
   },
   "dependencies": {
     "d3-array": "^3.2.4",
+    "d3-drag": "^3.0.0",
     "d3-force": "^3.0.0",
     "d3-format": "^3.1.0",
-    "d3-geo": "^3.0.1",
+    "d3-geo": "^3.1.0",
     "d3-scale": "^4.0.2",
-    "path": "^0.12.7"
+    "d3-selection": "^3.0.0",
+    "d3-timer": "^3.0.1",
+    "path": "^0.12.7",
+    "topojson-client": "^3.1.0"
   }
 }
