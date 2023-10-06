@@ -4,6 +4,7 @@
     import { geoOrthographic, geoPath, geoCentroid } from "d3-geo";
     import Glow from "./Glow.svelte";
     import ToolTip from "./ToolTip.svelte";
+    import Legend from "./Legend.svelte";
     import data from "$data/data_p.json";
     import { scaleLinear } from "d3-scale";
     import { max } from "d3-array";
@@ -42,7 +43,6 @@
         damping: 0.7,
     });
 
-
     let degressPerFrame = 0.5;
 
     let width = 400;
@@ -65,7 +65,6 @@
     const t = timer((elapsed) => {
         if (dragging || toolTipData) return;
         $xRotation += degressPerFrame;
-
     }, 1);
 
     let globe;
@@ -92,6 +91,8 @@
 </script>
 
 <div class="chart-container" bind:clientWidth={width}>
+    <h1>The world at glance</h1>
+    <h2>Population By Country, 2021</h2>
     <svg bind:this={globe} class:dragging {width} {height}>
         <Glow />
         <circle
@@ -144,6 +145,7 @@
         {/if}
     </svg>
     <ToolTip data={toolTipData} />
+    <Legend {colorScale} data={toolTipData} />
 </div>
 
 <style>
@@ -168,5 +170,23 @@
     }
     path:focus {
         outline: none;
+    }
+
+    h1,
+    h2 {
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 200;
+        margin-bottom: 1rem;
     }
 </style>
