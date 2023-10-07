@@ -1,19 +1,16 @@
 <script>
     import Scatterplot from "$components/ScatterPlot/Scatterplot.svelte";
+    import StoryTelling from "$components/StoryTelling/Scatterplot.svelte";
     import BeeswarmChart from "$components/BeeswarmChart/BeeswarmChart.svelte";
     import Globe from "$components/Globe/Globe.svelte";
 </script>
 
-<!-- <Scatterplot /> -->
+<!-- <StoryTelling /> -->
+
+<StoryTelling />
 
 <!-- <hr /> -->
 
 <!-- <BeeswarmChart /> -->
 
-<Globe />
-
-<style>
-    hr {
-        margin: 2rem;
-    }
-</style>
+<!-- <Globe /> -->
