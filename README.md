@@ -1,23 +1,38 @@
-# Svelte for Data Visualization | Starter Template
+# create-svelte
 
-This is a simple template for creating data visualizations with Svelte. It was primarily created for my upcoming /newline course, "[Better Data Visualizations with Svelte](https://www.newline.co/courses/better-data-visualizations-with-svelte/welcome)."
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-It uses [Svelte](https://svelte.dev/) and [D3](https://d3js.org/). The D3 modules most commonly used in data visualization are already installed. 
+## Creating a project
 
-It also includes a simple CSS reset, as existing Svelte templates sometimes have styles that break data visualizations. There is little else added, the template is meant to be barebones.
+If you're seeing this, you've probably already done this step. Congrats!
 
-## Getting started
+```bash
+# create a new project in the current directory
+npm create svelte@latest
 
-### 1. Clone the template
+# create a new project in my-app
+npm create svelte@latest my-app
+```
 
-You can clone this template in one of two ways:
-1. Click the green "Use this template" button on GitHub
-2. On the command line, run `npx degit connorrothschild/svelte-visualization-template`
+## Developing
 
-### 2. Install dependencies
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-Run `npm install` or `pnpm install` to install the dependencies.
+```bash
+npm run dev
 
-### 3. Start the development server
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-Run `npm run dev` to start the development server.
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
