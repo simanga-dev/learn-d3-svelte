@@ -1,6 +1,8 @@
 
+<h1 class="text-4xl pb-8" >List of Chart, built with D3.js </h1>
+<ul class="text-blue-900 list-disc" >
+	<li >
+		<a href="/beeswarm-chart"> beeswarm-chart</a>
+	</li>
+</ul>
 
-<main class="max-w-screen-xl ml-auto pt-4">
-	<h1 class="text-4xl">D3 Charts</h1>
-	<p>list of d3 charts I build while learning d3</p>
-</main>
