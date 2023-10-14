@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.tick text, .axis-title {
+        fill: #8f8f8f;
+        font-weight: 400;
+        font-size: 14px;
+
+}

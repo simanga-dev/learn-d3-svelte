@@ -2,20 +2,16 @@
 	import data from './data';
 	import { forceSimulation, forceX, forceY, forceCollide, type Simulation } from 'd3-force';
 	import { scaleLinear, scaleOrdinal, scaleBand, scaleSqrt } from 'd3-scale';
+	import AxisX from './AxisX.svelte';
+	import AxisY from './AxisY.svelte';
+	import Legend from './Legend.svelte';
+	import Tootip from './Tooltip.svelte';
 	import { extent, mean, rollups } from 'd3-array';
 	import { fade } from 'svelte/transition';
-
-	type Node = {
-		index: number;
-		country: string;
-		happiness: number;
-		continent: string;
-		x: number;
-		y: number;
-	};
+	import type { Node } from './types';
 
 	let width = 400,
-		height = 400;
+		height = 600;
 
 	const margin = {
 		top: 15,
@@ -23,8 +19,6 @@
 		bottom: 15,
 		left: 15
 	};
-
-	console.log(width);
 
 	const continents = rollups(
 		data,
@@ -87,32 +81,87 @@
 	simulation.on('tick', () => {
 		nodes = simulation.nodes();
 	});
+
+	let hovered: Node | null;
+	let hoveredContinent: string | null;
 </script>
 
+<a class="text-blue-900" href="/">go back to charts</a>
+
 <section>
-	<div bind:clientWidth={width}>
-		<svg {width} {height}>
+	<h1 class="text-xl text-center py-8 mb-4">The happiness continent in the world</h1>
+	<Legend {colorScale} bind:hoveredContinent />
+	<div
+		class="relative"
+		on:click={() => {
+			groupByContinet = !groupByContinet;
+			hovered = null;
+		}}
+		on:keydown={() => {
+			groupByContinet = !groupByContinet;
+			hovered = null;
+		}}
+		bind:clientWidth={width}
+	>
+		<svg
+			{width}
+			{height}
+			on:mouseleave={() => {
+				hovered = null;
+			}}
+		>
+			<AxisX {xScale} height={innerHeight} width={innerWidth} />
+			<AxisY {yScale} {groupByContinet} />
 			<g transform="translate({margin.left}, {margin.top})">
+				{#if hovered}
+					<line
+						x1={hovered.x}
+						x2={hovered.x}
+						y1={innerHeight - margin.bottom}
+						y2={hovered.y + margin.top + radiusScale(hovered.happiness)}
+						stroke={colorScale(hovered.continent)}
+						stroke-width="2"
+					/>
+				{/if}
+
 				{#each nodes as node, index}
 					<circle
+						class="cursor-pointer duration-300 transition-[stroke] transition-opacity"
 						in:fade={{ delay: 500 + index * 10 }}
 						role="button"
 						cx={node.x}
 						cy={node.y}
 						r={radiusScale(node.happiness)}
 						fill={colorScale(node.continent)}
+						stroke={hovered || hoveredContinent
+							? hovered === node || hoveredContinent == node.continent
+								? 'black'
+								: 'transparent'
+							: '#00000090'}
+						opacity={hovered || hoveredContinent
+							? hovered === node || hoveredContinent == node.continent
+								? 1
+								: 0.3
+							: 1}
+						on:mouseover={() => {
+							hovered = node;
+						}}
+						on:focus={() => {
+							hovered = node;
+						}}
+						tabindex="0"
+						on:click={(e) => {
+							e.stopPropagation();
+						}}
+						on:keydown={(e) => {
+							e.stopPropagation();
+						}}
 					/>
 				{/each}
 			</g>
 		</svg>
+		{#if hovered}
+			<Tootip {colorScale} data={hovered} {width} />
+		{/if}
 	</div>
 </section>
-
-<!-- fill={colorScale(node.continent)} -->
-<!-- 	// let hovered; -->
-<!-- 	// let hoveredContinent; -->
-<!-- </script> -->
-
-<!-- <h1>Hello</h1> -->
-<!---->
-<!-- <h1>The happiness continent in the world</h1> -->
