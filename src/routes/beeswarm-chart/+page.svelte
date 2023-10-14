@@ -1,32 +1,18 @@
 <script lang="ts">
 	import data from './data';
-	import {
-		forceSimulation,
-		forceX,
-		forceY,
-		forceCollide,
-		type SimulationNodeDatum
-	} from 'd3-force';
+	import { forceSimulation, forceX, forceY, forceCollide, type Simulation } from 'd3-force';
 	import { scaleLinear, scaleOrdinal, scaleBand, scaleSqrt } from 'd3-scale';
 	import { extent, mean, rollups } from 'd3-array';
-	import { z } from 'zod';
-	// import AxisX from "./AxisX.svelte";
-	// import AxisY from "./AxisY.svelte";
-	// import Legend from "./Legend.svelte";
-	// import Tootip from "./Tooltip.svelte";
-	// import { fade } from "svelte/transition";
+	import { fade } from 'svelte/transition';
 
-	const countrySchema = z.object({
-		country: z.string(),
-		happiness: z.number(),
-		continent: z.string(),
-		index: z.number().optional(),
-		x: z.number().optional(),
-		y: z.number().optional(),
-		vx: z.number().optional()
-	});
-
-	const contries = z.array(countrySchema).parse(data);
+	type Node = {
+		index: number;
+		country: string;
+		happiness: number;
+		continent: string;
+		x: number;
+		y: number;
+	};
 
 	let width = 400,
 		height = 400;
@@ -38,156 +24,95 @@
 		left: 15
 	};
 
-	// Generate the average for each continent, so that we can sort according to that
+	console.log(width);
+
 	const continents = rollups(
-		contries,
+		data,
 		(v) => mean(v, (d) => d.happiness),
 		(d) => d.continent
 	) // Group data by continent and return the group-wide mean
-		.sort((a, b) => a[1] - b[1]) // Sort according to value
+		.sort((a, b) => {
+			if (a[1] && b[1]) return a[1] - b[1];
+			return 0;
+		}) // Sort according to value
 		.map((d) => d[0]); // Grab the continent name
 
+	let minMax = extent(data, (d) => d.happiness);
 	$: radiusScale = scaleSqrt()
-		.domain(extent(data, (d) => d.happiness))
+		.domain(minMax[1] ? minMax : [2, 8])
 		.range(width < 568 ? [2, 6] : [3, 8]);
 
 	const colorRange = ['#dda0dd', '#fe7f2d', '#fcca46', '#a1c181', '#619b8a', '#eae2b7'];
-	const colorScale = scaleOrdinal().domain(continents).range(colorRange);
+	const colorScale = scaleOrdinal<string>().domain(continents).range(colorRange);
 
 	$: innerWidth = width - margin.left - margin.right;
 	let innerHeight = height - margin.top - margin.bottom;
 
-	// .domain(extent(data, (d) => d.happiness))
 	$: xScale = scaleLinear().domain([1, 9]).range([0, innerWidth]);
 
 	let yScale = scaleBand().domain(continents).range([innerHeight, 0]).paddingOuter(0.5);
 
 	let groupByContinet = false;
 
-	const simulation = forceSimulation(contries);
-
+	const simulation = forceSimulation(data.map((d, i) => ({ ...d, index: i, x: 0, y: 0 })));
 	$: {
 		simulation
 			.force(
 				'x',
-				forceX<z.infer<typeof countrySchema>>()
+				forceX<Node>()
 					.x((d) => xScale(d.happiness))
 					.strength(0.8)
 			)
 			.force(
 				'y',
-				forceY()
-					.y(groupByContinet ? (d) => yScale(d.continent) : innerHeight / 2)
+				forceY<Node>()
+					.y((d) => {
+						let ys = yScale(d.continent);
+						if (ys) return groupByContinet ? ys : innerHeight / 2;
+						return 0;
+					})
 					.strength(0.2)
 			)
 			.force(
 				'collide',
-				forceCollide().radius((d) => radiusScale(d.happiness))
+				forceCollide<Node>().radius((d) => radiusScale(d.happiness))
 			)
 			.alpha(0.3)
 			.alphaDecay(0.0005)
 			.restart();
+	}
 
+	let nodes: Node[] | [] = [];
 
-	let nodes  = simulation.nodes();
 	simulation.on('tick', () => {
 		nodes = simulation.nodes();
 	});
-
-	let hovered;
-	let hoveredContinent;
-	$: console.log(hoveredContinent);
 </script>
 
-<!-- <h1>The happiness continent in the world</h1> -->
-<!---->
-<!-- <Legend {colorScale} bind:hoveredContinent /> -->
-<!-- <div -->
-<!--     class="chart-container" -->
-<!--     on:click={() => { -->
-<!--         groupByContinet = !groupByContinet; -->
-<!--         hovered = null; -->
-<!--     }} -->
-<!--     on:keydown={() => { -->
-<!--         groupByContinet = !groupByContinet; -->
-<!--         hovered = null; -->
-<!--     }} -->
-<!--     bind:clientWidth={width} -->
-<!-- > -->
-<!--     <svg -->
-<!--         {width} -->
-<!--         {height} -->
-<!--         on:mouseleave={() => { -->
-<!--             hovered = null; -->
-<!--         }} -->
-<!--     > -->
-<!--         <g transform="translate({margin.left}, {margin.top})"> -->
-<!--             <AxisX {xScale} height={innerHeight} width={innerWidth} /> -->
-<!--             <AxisY {yScale} {groupByContinet} /> -->
-<!--             {#if hovered} -->
-<!--                 <line -->
-<!--                     x1={hovered.x} -->
-<!--                     x2={hovered.x} -->
-<!--                     y1={height - margin.bottom} -->
-<!--                     y2={hovered.y + margin.top + radiusScale(hovered.happiness)} -->
-<!--                     stroke={colorScale(hovered.continent)} -->
-<!--                     stroke-width="2" -->
-<!--                 /> -->
-<!--             {/if} -->
-<!---->
-<!--             {#each nodes as node, index} -->
-<!--                 <circle -->
-<!--                     in:fade={{ delay: 500 + index * 10 }} -->
-<!--                     role="button" -->
-<!--                     cx={node.x} -->
-<!--                     cy={node.y} -->
-<!--                     r={radiusScale(node.happiness)} -->
-<!--                     fill={colorScale(node.continent)} -->
-<!--                     stroke={hovered || hoveredContinent -->
-<!--                         ? hovered === node || hoveredContinent == node.continent -->
-<!--                             ? "black" -->
-<!--                             : "transparent" -->
-<!--                         : "#00000090"} -->
-<!--                     opacity={hovered || hoveredContinent -->
-<!--                         ? hovered === node || hoveredContinent == node.continent -->
-<!--                             ? 1 -->
-<!--                             : 0.3 -->
-<!--                         : 1} -->
-<!--                     on:mouseover={() => { -->
-<!--                         hovered = node; -->
-<!--                     }} -->
-<!--                     on:focus={() => { -->
-<!--                         hovered = node; -->
-<!--                     }} -->
-<!--                     tabindex="0" -->
-<!--                     on:click={(e) => { -->
-<!--                         e.stopPropagation(); -->
-<!--                     }} -->
-<!--                     on:keydown={(e) => { -->
-<!--                         e.stopPropagation(); -->
-<!--                     }} -->
-<!--                 /> -->
-<!--             {/each} -->
-<!--         </g> -->
-<!--     </svg> -->
-<!--     {#if hovered} -->
-<!--         <Tootip {colorScale} data={hovered} {width} /> -->
-<!--     {/if} -->
-<!-- </div> -->
-<!---->
-<!-- <style> -->
-<!--     .chart-container { -->
-<!--         position: relative; -->
-<!--     } -->
-<!---->
-<!--     circle { -->
-<!--         transition: stroke 300ms ease, opacity 300ms ease; -->
-<!--         cursor: pointer; -->
-<!--     } -->
-<!-- </style> -->
-<!---->
+<section>
+	<div bind:clientWidth={width}>
+		<svg {width} {height}>
+			<g transform="translate({margin.left}, {margin.top})">
+				{#each nodes as node, index}
+					<circle
+						in:fade={{ delay: 500 + index * 10 }}
+						role="button"
+						cx={node.x}
+						cy={node.y}
+						r={radiusScale(node.happiness)}
+						fill={colorScale(node.continent)}
+					/>
+				{/each}
+			</g>
+		</svg>
+	</div>
+</section>
 
-<!-- <main class="max-w-screen-xl ml-auto pt-4"> -->
-<!-- 	<h1 class="text-4xl">D3 Charts</h1> -->
-<!-- 	<p>list of d3 charts I build while learning d3</p> -->
-<!-- </main> -->
+<!-- fill={colorScale(node.continent)} -->
+<!-- 	// let hovered; -->
+<!-- 	// let hoveredContinent; -->
+<!-- </script> -->
+
+<!-- <h1>Hello</h1> -->
+<!---->
+<!-- <h1>The happiness continent in the world</h1> -->
