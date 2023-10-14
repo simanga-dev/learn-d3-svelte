@@ -276,10 +276,29 @@
   resolved "https://registry.npmjs.org/@types/d3-array/-/d3-array-3.0.8.tgz"
   integrity sha512-2xAVyAUgaXHX9fubjcCbGAUOqYfRJN1em1EKR2HfzWBpObZhwfnZKvofTN4TplMqJdFQao61I+NVSai/vnBvDQ==
 
+"@types/d3-drag@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@types/d3-drag/-/d3-drag-3.0.4.tgz"
+  integrity sha512-/t53K1erTuUbP7WIX9SE0hlmytpTYRbIthlhbGkBHzCV5vPO++7yrk8OlisWPyIJO5TGowTmqCtGH2tokY5T/g==
+  dependencies:
+    "@types/d3-selection" "*"
+
 "@types/d3-force@^3.0.6":
   version "3.0.6"
   resolved "https://registry.npmjs.org/@types/d3-force/-/d3-force-3.0.6.tgz"
   integrity sha512-G9wbOvCxkNlLrppoHLZ6oFpbm3z7ibfkXwLD8g5/4Aa7iTEV0Z7TQ0OL8UxAtvdOhCa2VZcSuqn1NQqyCEqmiw==
+
+"@types/d3-format@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@types/d3-format/-/d3-format-3.0.2.tgz"
+  integrity sha512-9oQWvKk2qVBo49FQq8yD/et8Lx0W5Ac2FdGSOUecqOFKqh0wkpyHqf9Qc7A06ftTR+Lz13Pi3jHIQis0aCueOA==
+
+"@types/d3-geo@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.npmjs.org/@types/d3-geo/-/d3-geo-3.0.5.tgz"
+  integrity sha512-ysEEU93Wv9p2UZBxTK3kUP7veHgyhTA0qYtI7bxK5EMXb3JxGv0D4IH54PxprAF26n+uHci24McVmzwIdLgvgQ==
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/d3-scale@^4.0.5":
   version "4.0.5"
@@ -288,15 +307,30 @@
   dependencies:
     "@types/d3-time" "*"
 
+"@types/d3-selection@*", "@types/d3-selection@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@types/d3-selection/-/d3-selection-3.0.7.tgz"
+  integrity sha512-qoj2O7KjfqCobmtFOth8FMvjwMVPUAAmn6xiUbLl1ld7vQCPgffvyV5BBcEFfqWdilAUm+3zciU/3P3vZrUMlg==
+
 "@types/d3-time@*":
   version "3.0.1"
   resolved "https://registry.npmjs.org/@types/d3-time/-/d3-time-3.0.1.tgz"
   integrity sha512-5j/AnefKAhCw4HpITmLDTPlf4vhi8o/dES+zbegfPb7LaGfNyqkLxBR6E+4yvTAgnJLmhe80EXFMzUs38fw4oA==
 
+"@types/d3-timer@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@types/d3-timer/-/d3-timer-3.0.0.tgz"
+  integrity sha512-HNB/9GHqu7Fo8AQiugyJbv6ZxYz58wef0esl4Mv828w1ZKpAshw/uFWVDUcIB9KKFeFKoxS3cHY07FFgtTRZ1g==
+
 "@types/estree@*", "@types/estree@^1.0.0", "@types/estree@^1.0.1":
   version "1.0.2"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.2.tgz"
   integrity sha512-VeiPZ9MMwXjO32/Xu7+OwflfmeoRwkE/qzndw42gGtgJwZopBnzy2gD//NN1+go1mADzkDcqf/KnFRSjTJ8xJA==
+
+"@types/geojson@*":
+  version "7946.0.11"
+  resolved "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.11.tgz"
+  integrity sha512-L7A0AINMXQpVwxHJ4jxD6/XjZ4NDufaRlUJHjNIFKYUFBH1SvOW+neaqb0VTRSLW5suSrSu19ObFEFnfNcr+qg==
 
 "@types/json-schema@^7.0.12":
   version "7.0.13"
@@ -322,6 +356,48 @@
   version "7.5.3"
   resolved "https://registry.npmjs.org/@types/semver/-/semver-7.5.3.tgz"
   integrity sha512-OxepLK9EuNEIPxWNME+C6WwbRAOOI2o2BaQEGzz5Lu2e4Z5eDnEo+/aVEDMIXywoJitJ7xWd641wrGLZdtwRyw==
+
+"@types/topojson-client@*", "@types/topojson-client@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/@types/topojson-client/-/topojson-client-3.1.2.tgz"
+  integrity sha512-Lp6ZDxSQf9Tr4IcV/aJ72Zk1Fso7oPg1AbLKF4b6Jc5k05z+WK7nmmpfneKsnbj1NNUwj2SgydBZyJzc4O865w==
+  dependencies:
+    "@types/geojson" "*"
+    "@types/topojson-specification" "*"
+
+"@types/topojson-server@*":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@types/topojson-server/-/topojson-server-3.0.2.tgz"
+  integrity sha512-GAa4b3+tTnNID68Fmx1G2VSAvDHXlyHDCfpPFZxYEch/9qV38y5WsGpQIqcyRHd1cdtCJpcKZ3xpm8Q+Lvvr2A==
+  dependencies:
+    "@types/geojson" "*"
+    "@types/topojson-specification" "*"
+
+"@types/topojson-simplify@*":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@types/topojson-simplify/-/topojson-simplify-3.0.1.tgz"
+  integrity sha512-H7SS2X11Lo3iRT3e7R6jPTAazOoSLD0LKIGq1b+4m/76Md46JfeU3zVIhxfIX9FY7oiyEbXwGumjK1GUXwIIMA==
+  dependencies:
+    "@types/geojson" "*"
+    "@types/topojson-specification" "*"
+
+"@types/topojson-specification@*":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@types/topojson-specification/-/topojson-specification-1.0.3.tgz"
+  integrity sha512-0rGL/Buelb+H2SVfmDRSDNxWgYQk4U/R18wrFc2DOfBKHaKOSz9bXbLQxAFY7j16e1E182bGwoSJdUhRq9fqBA==
+  dependencies:
+    "@types/geojson" "*"
+
+"@types/topojson@^3.2.4":
+  version "3.2.4"
+  resolved "https://registry.npmjs.org/@types/topojson/-/topojson-3.2.4.tgz"
+  integrity sha512-aEX3V0JvhEg/8ehKKFHSyKb//1bAPzNTrNaeslNUrDAxfqlb2bepwO9/kafmGWKCPeZOsIZJmsTq4Ya6D40SPA==
+  dependencies:
+    "@types/geojson" "*"
+    "@types/topojson-client" "*"
+    "@types/topojson-server" "*"
+    "@types/topojson-simplify" "*"
+    "@types/topojson-specification" "*"
 
 "@typescript-eslint/eslint-plugin@^6.0.0":
   version "6.7.4"
@@ -695,6 +771,11 @@ commander@^4.0.0:
   resolved "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz"
   integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
 
+commander@2:
+  version "2.20.3"
+  resolved "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
+
 commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/commondir/-/commondir-1.0.1.tgz"
@@ -732,7 +813,7 @@ cssesc@^3.0.0:
   resolved "https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
-d3-array@^3.2.4, "d3-array@2 - 3", "d3-array@2.10.0 - 3":
+d3-array@^3.2.4, "d3-array@2 - 3", "d3-array@2.10.0 - 3", "d3-array@2.5.0 - 3":
   version "3.2.4"
   resolved "https://registry.npmjs.org/d3-array/-/d3-array-3.2.4.tgz"
   integrity sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg==
@@ -749,6 +830,14 @@ d3-array@^3.2.4, "d3-array@2 - 3", "d3-array@2.10.0 - 3":
   resolved "https://registry.npmjs.org/d3-dispatch/-/d3-dispatch-3.0.1.tgz"
   integrity sha512-rzUyPU/S7rwUflMyLc1ETDeBj0NRuHKKAcvukozwhshr6g6c5d8zh4c2gQjY2bZ0dXeGLWc1PF174P2tVvKhfg==
 
+d3-drag@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/d3-drag/-/d3-drag-3.0.0.tgz"
+  integrity sha512-pWbUJLdETVA8lQNJecMxoXfH6x+mO2UQo8rSmZ+QqxcbyA3hfeprFgIT//HW2nlHChWeIIMwS2Fq+gEARkhTkg==
+  dependencies:
+    d3-dispatch "1 - 3"
+    d3-selection "3"
+
 d3-force@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/d3-force/-/d3-force-3.0.0.tgz"
@@ -758,10 +847,17 @@ d3-force@^3.0.0:
     d3-quadtree "1 - 3"
     d3-timer "1 - 3"
 
-"d3-format@1 - 3":
+d3-format@^3.1.0, "d3-format@1 - 3":
   version "3.1.0"
   resolved "https://registry.npmjs.org/d3-format/-/d3-format-3.1.0.tgz"
   integrity sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA==
+
+d3-geo@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/d3-geo/-/d3-geo-3.1.0.tgz"
+  integrity sha512-JEo5HxXDdDYXCaWdwLRt79y7giK8SbhZJbFWXqbRTolCHFI5jRqteLzCsq51NKbUoX0PjBVSohxrx+NoOUujYA==
+  dependencies:
+    d3-array "2.5.0 - 3"
 
 "d3-interpolate@1.2.0 - 3":
   version "3.0.1"
@@ -786,6 +882,11 @@ d3-scale@^4.0.2:
     d3-time "2.1.1 - 3"
     d3-time-format "2 - 4"
 
+d3-selection@^3.0.0, d3-selection@3:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/d3-selection/-/d3-selection-3.0.0.tgz"
+  integrity sha512-fmTRWbNMmsmWq6xJV8D19U/gw/bwrHfNXxrIN+HfZgnzqTHp9jOmKMhsTUjXOJnZOdZY9Q28y4yebKzqDKlxlQ==
+
 "d3-time-format@2 - 4":
   version "4.1.0"
   resolved "https://registry.npmjs.org/d3-time-format/-/d3-time-format-4.1.0.tgz"
@@ -800,7 +901,7 @@ d3-scale@^4.0.2:
   dependencies:
     d3-array "2 - 3"
 
-"d3-timer@1 - 3":
+d3-timer@^3.0.1, "d3-timer@1 - 3":
   version "3.0.1"
   resolved "https://registry.npmjs.org/d3-timer/-/d3-timer-3.0.1.tgz"
   integrity sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==
@@ -2156,6 +2257,13 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+topojson-client@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/topojson-client/-/topojson-client-3.1.0.tgz"
+  integrity sha512-605uxS6bcYxGXw9qi62XyrV6Q3xwbndjachmNxu8HWTtVPxZfEJN9fd/SZS1Q54Sn2y0TMyMxFj/cJINqGHrKw==
+  dependencies:
+    commander "2"
 
 totalist@^3.0.0:
   version "3.0.1"
