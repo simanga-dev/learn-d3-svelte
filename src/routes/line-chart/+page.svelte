@@ -4,6 +4,8 @@
 	import { extent } from 'd3-array';
 	import { scaleLinear, scaleTime } from 'd3-scale';
 	import { line } from 'd3-shape';
+	import AxisY from './AxisY.svelte';
+    import AxisX from './AxisX.svelte'
 
 	let width = 400,
 		height = 400;
@@ -41,10 +43,6 @@
 
 	let freezingTemp = yScale(32);
 
-	// $: console.log(lineGeneratore(dataset));
-	// $: console.log(xExtent);
-	// $: console.log(xScale(dataset[0].date));
-	// $: console.log(xScale(xExtent[1]));
 </script>
 
 <a class="text-blue-300" href="/">go back to charts</a>
@@ -52,8 +50,10 @@
 	<div class="chart-conatiner" bind:clientWidth={width}>
 		<svg class="h" {width} {height}>
 			<g transform="translate({margin.left}, {margin.top})">
-				<rect x="0" y={freezingTemp} width={innerWidth} height={innerHeight} fill="pink" />
-				<path fill="none" stroke-width="2" stroke="#1f3957"  d={lineGeneratore(dataset)} />
+				<!-- <rect x="0" y={freezingTemp} width={innerWidth} height={innerHeight} fill="pink" /> -->
+				<path fill="none" stroke-width="2" stroke="#1f3957" d={lineGeneratore(dataset)} />
+				<AxisY {yScale} height={innerHeight} />
+				<AxisX {xScale} width={innerWidth} height={innerHeight} />
 			</g>
 		</svg>
 	</div>
