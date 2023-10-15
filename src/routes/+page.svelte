@@ -9,4 +9,7 @@
 	<li>
 		<a href="/globe-viz">globe visualization</a>
 	</li>
+<li>
+		<a href="/story-telling">story telling</a>
+	</li>
 </ul>
