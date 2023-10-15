@@ -9,7 +9,10 @@
 	<li>
 		<a href="/globe-viz">globe visualization</a>
 	</li>
-<li>
+	<li>
 		<a href="/story-telling">story telling</a>
+	</li>
+	<li>
+		<a href="/line-chart">line chart</a>
 	</li>
 </ul>
