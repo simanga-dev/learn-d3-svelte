@@ -3,7 +3,7 @@
 	import { timeParse } from 'd3-time-format';
 	import { extent } from 'd3-array';
 	import { scaleLinear, scaleTime } from 'd3-scale';
-	import { line } from 'd3-shape';
+	import { curveMonotoneX, curveNatural, curveStep, line } from 'd3-shape';
 	import AxisY from './AxisY.svelte';
     import AxisX from './AxisX.svelte'
 
@@ -39,7 +39,7 @@
 
 	$: lineGeneratore = line<(typeof dataset)[0]>()
 		.x((d) => xScale(xAccessor(d) || new Date()))
-		.y((d) => yScale(yAccessor(d)));
+		.y((d) => yScale(yAccessor(d))).curve(curveStep);
 
 	let freezingTemp = yScale(32);
 
