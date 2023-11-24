@@ -6,4 +6,5 @@
 	<li><a href="/story-telling">story telling</a></li>
 	<li><a href="/line-chart">line chart</a></li>
 	<li><a href="/pie-chart">pie chart</a></li>
+	<li><a href="/geo-viz-sa">South African Map</a></li>
 </ul>

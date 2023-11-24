@@ -31,6 +31,8 @@
 
 	let toolTipData: any;
 
+    console.log(countries)
+
 	countries.forEach((country: any) => {
 		const metadata = data.find((d) => d.id === country.id);
 		if (metadata) {
