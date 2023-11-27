@@ -18,6 +18,8 @@
 
 	// const countries = topojson.feature(world, world.objects.contries).features
 
+    console.log(world)
+
 	let countries = topojson.feature(
 		world as unknown as Topology,
 		world.objects.countries as GeometryObject
